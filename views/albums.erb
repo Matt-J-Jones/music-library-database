@@ -1,0 +1,18 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Albums</h1>
+	<p>
+    <table>
+    <% @array_albums.each do |elem_a, elem_b| %>
+      <tr>
+        <td>
+          Title: <%= elem_a %>
+          Released: <%= elem_b %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+	</p>
+  </body>
+</html>
