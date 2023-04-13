@@ -69,6 +69,22 @@ class Application < Sinatra::Base
     return erb(:album_created)
   end
 
+  get '/new_artist' do
+    return erb(:new_artist)
+  end
+
+  post '/new_artist' do
+    repo = ArtistRepository.new
+    artist = Artist.new
+    artist.name = params[:name]
+    artist.genre = params[:genre]
+    repo.create(artist)
+
+    @name = params[:name]
+    @genre = params[:genre]
+    return erb(:artist_created)
+  end
+
   get '/artists' do
     @artists = []
     repo = ArtistRepository.new

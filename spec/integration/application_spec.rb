@@ -61,6 +61,15 @@ describe Application do
       expect(response.body).to include('<input type="text" name="release_year" />')
       expect(response.body).to include('<input type="text" name="artist_id" />')
     end
+
+    it "returns the html form to create new artist" do
+      response = get('/new_artist')
+
+      expect(response.status).to eq (200)
+      expect(response.body).to include('<form method="POST" action="/new_artist">')
+      expect(response.body).to include('<input type="text" name="name" />')
+      expect(response.body).to include('<input type="text" name="genre" />')
+    end
   end
 
   context 'POST /new_album' do
@@ -79,6 +88,14 @@ describe Application do
       response = post('/new_album', album_name: new_album.title, release_year: new_album.release_year, artist_id: new_album.artist_id)
       expect(response.status).to eq (200)
       expect(response.body).to include ('<h1>Album Created: Rosenrot</h1>')
+    end
+  end
+
+  context 'POST /new_artist' do
+    it 'creates new artist and returns conformation page' do
+      response = post('/new_artist', name: 'Yeah Yeah Yeahs', genre: 'Indie')
+      expect(response.status).to eq (200)
+      expect(response.body).to include ("Artist Created: Yeah Yeah Yeahs")
     end
   end
 end
