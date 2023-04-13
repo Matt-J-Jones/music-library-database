@@ -1,20 +1,29 @@
 require_relative 'album'
+require_relative 'database_connection'
 
 class AlbumRepository
   def all
     albums = []
-
-    # Send the SQL query and get the result set.
     sql = 'SELECT id, title, release_year, artist_id FROM albums;'
     result_set = DatabaseConnection.exec_params(sql, [])
-    
-    # The result set is an array of hashes.
-    # Loop through it to create a model
-    # object for each record hash.
     result_set.each do |record|
+      album = Album.new
+      album.id = record['id'].to_i
+      album.title = record['title']
+      album.release_year = record['release_year']
+      album.artist_id = record['artist_id'].to_i
 
-      # Create a new model object
-      # with the record data.
+      albums << album
+    end
+
+    return albums
+  end
+
+  def all_by_artist(id)
+    albums = []
+    sql = 'SELECT id, title, release_year, artist_id FROM albums WHERE artist_id = $1;'
+    result_set = DatabaseConnection.exec_params(sql, [id])
+    result_set.each do |record|
       album = Album.new
       album.id = record['id'].to_i
       album.title = record['title']
@@ -40,6 +49,8 @@ class AlbumRepository
     return album
   end
 
+
+
   def create(album)
     sql = 'INSERT INTO albums (title, release_year, artist_id) VALUES ($1, $2, $3);'
     result_set = DatabaseConnection.exec_params(sql, [album.title, album.release_year, album.artist_id])
@@ -52,3 +63,11 @@ class AlbumRepository
     DatabaseConnection.exec_params(sql, [id]);
   end
 end
+
+# connection = PG.connect({ host: '127.0.0.1', dbname: 'music_library_test' })
+# DatabaseConnection.connect
+# repo = AlbumRepository.new
+# result = repo.all_by_artist(1)
+# result.each { |item|
+#   puts item.title
+# }

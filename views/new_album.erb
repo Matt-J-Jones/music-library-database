@@ -1,0 +1,24 @@
+<html>
+  <head></head>
+  <body>
+    <div style="text-align: right;">
+    <form method="POST" action="/new_album">
+      <label>Album Name: </label>
+      <input type="text" name="album_name" /><br>
+      <label>Release Year: </label>
+      <input type="text" name="release_year" /><br>
+      <label>Artist ID: </label>
+      <input type="text" name="artist_id" /><br>
+
+      <input type ="submit" />
+    </form>
+    </div>
+  </body>
+</html>
+
+<%# def create(album)
+  sql = 'INSERT INTO albums (title, release_year, artist_id) VALUES ($1, $2, $3);'
+  result_set = DatabaseConnection.exec_params(sql, [album.title, album.release_year, album.artist_id])
+
+  return album
+end %>

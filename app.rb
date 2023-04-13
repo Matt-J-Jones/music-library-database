@@ -21,31 +21,64 @@ class Application < Sinatra::Base
     new_album.artist_id = params[:artist_id]
 
     repo = AlbumRepository.new
+    
     repo.create(new_album)
   end
 
-  get '/albums' do
+  get '/' do
     @array_albums = []
     repo = AlbumRepository.new
+    artists = ArtistRepository.new
     result = repo.all
 
     result.each do |item|
-      @array_albums << [item.title, item.release_year]
+      @array_albums << [item.id, item.title, item.release_year, artists.find(item.artist_id).name]
     end
 
     return erb(:albums)
   end
 
+  get '/albums/:id' do
+    album_id = params[:id]
+    repo = AlbumRepository.new
+    artists = ArtistRepository.new
+    result = repo.find(album_id)
+    @album = [result.id, result.title, result.release_year, artists.find(result.artist_id).name]
+
+    return erb(:album)
+  end
+
+  get '/new_album' do
+    return erb(:new_album)
+  end
+
+  post '/new_album' do
+    repo = ArtistRepository.new
+    albums = AlbumRepository.new
+    new_album = Album.new
+
+    new_album.title = params[:album_name]
+    new_album.release_year = params[:release_year]
+    new_album.artist_id = params[:artist_id]
+
+    albums.create(new_album)
+
+    @album_name = params[:album_name]
+    @release_year = params[:release_year]
+    @artist_name = repo.find(params[:artist_id]).name
+    return erb(:album_created)
+  end
+
   get '/artists' do
-    artists = []
+    @artists = []
     repo = ArtistRepository.new
     result = repo.all
 
     result.each do |item|
-      artists << item.name
+      @artists << [item.id, item.name]
     end
 
-    return artists.join(", ")
+    return erb(:artists)
   end
 
   post '/artists' do

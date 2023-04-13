@@ -17,7 +17,7 @@ describe AlbumRepository do
 
     albums = repo.all
     
-    expect(albums.length).to eq(12)
+    expect(albums.length).to eq(13)
     expect(albums.first.title).to eq('Doolittle')
     expect(albums.first.artist_id).to eq(1)
   end
@@ -38,7 +38,7 @@ describe AlbumRepository do
     repo.delete(1)
     albums = repo.all
 
-    expect(albums.length).to eq(11)
+    expect(albums.length).to eq(12)
     expect(albums.first.id).to eq(2)
   end
 
@@ -53,7 +53,7 @@ describe AlbumRepository do
 
     albums = repo.all
 
-    expect(albums.length).to eq(13)
+    expect(albums.length).to eq(14)
     expect(albums.last.title).to eq('Pablo Honey')
     expect(albums.last.artist_id).to eq(1)
   end

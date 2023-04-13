@@ -1,0 +1,17 @@
+<html>
+  <head></head>
+  <body>
+    <h1><%= @artist_name %></h1>
+	<p>
+    <table>
+    <% @albums.each do |album_id, album_title, release_year| %>
+      <tr>
+        <td>
+          <a href = "/albums/<%= album_id %>"><%= album_title %></a>, <%= release_year %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+	</p>
+  </body>
+</html>

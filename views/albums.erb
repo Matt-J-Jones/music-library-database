@@ -4,11 +4,10 @@
     <h1>Albums</h1>
 	<p>
     <table>
-    <% @array_albums.each do |elem_a, elem_b| %>
+    <% @array_albums.each do |album_id, album_title, release_year, artist_name| %>
       <tr>
         <td>
-          Title: <%= elem_a %>
-          Released: <%= elem_b %>
+          <%= artist_name %>: <a href = "/albums/<%= album_id %>"><%= album_title %></a>, <%= release_year %>
         </td>
       </tr>
     <% end %>

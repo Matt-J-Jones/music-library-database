@@ -1,0 +1,17 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Albums</h1>
+	<p>
+    <table>
+    <% @artists.each do |artist_id, artist_name| %>
+      <tr>
+        <td>
+          <a href = "/artists/<%= artist_id %>"><%= artist_name %></a>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+	</p>
+  </body>
+</html>
